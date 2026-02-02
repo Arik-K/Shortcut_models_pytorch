@@ -56,7 +56,7 @@ model_config = ml_collections.ConfigDict({
     'cfg_scale': 4.0,
     'target_update_rate': 0.999,
     'use_ema': 0,
-    'use_stable_vae': 1,
+    'use_stable_vae': 0,  # Disabled: StableVAE not implemented yet
     'sharding': 'dp',   # dp or fsdp.
     't_sampling': 'discrete-dt',
     'dt_sampling': 'uniform',

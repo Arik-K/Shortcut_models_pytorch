@@ -317,8 +317,10 @@ def main():
         if step % args.log_interval == 0 or step == 1:
             pbar.set_description(f"Step {step} | Loss: {loss.item():.4f}")
             if is_master:
-                # print(f"Step {step}: {loss_dict}")
-                pass
+                print(f"\n[Step {step}] Loss: {loss.item():.6f} | Grad Norm: {grad_norm:.4f}")
+                for key, val in loss_dict.items():
+                    if key != 'loss_total':
+                        print(f"  {key}: {val.item():.6f}")
 
         # 5. Evaluation
         if step % args.eval_interval == 0:
@@ -333,8 +335,13 @@ def main():
                 # Sample 8 steps
                 eight_step = model.sample(sample_noise, num_steps=8)
                 
-                # Save just one step for speed
-                # utils.save_image(one_step, f"results/sample_{step}.png")
+                # Save samples
+                import os
+                os.makedirs("results", exist_ok=True)
+                from torchvision import utils
+                utils.save_image(one_step, f"results/sample_1step_{step}.png", normalize=True, value_range=(-1, 1))
+                utils.save_image(eight_step, f"results/sample_8step_{step}.png", normalize=True, value_range=(-1, 1))
+                print(f"\n[Step {step}] Saved samples to results/")
             model.train()
 
         # 7. Checkpointing

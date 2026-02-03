@@ -18,8 +18,7 @@ from einops.layers.torch import Rearrange
 
 from tqdm.auto import tqdm
 
-from visualDet3D.networks.detectors.attend import Attend
-
+from attend import Attend
 
 # constants
 

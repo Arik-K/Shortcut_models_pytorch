@@ -328,6 +328,10 @@ class CrossAttention(nn.Module):
         self.to_out= nn.Conv2d(hidden_dim, dim, 1)
     
     def forward(self, x, codebook=None):
+        # Skip cross-attention if no codebook provided (unconditional training)
+        if codebook is None:
+            return torch.zeros_like(x)  # Return zeros so residual connection just uses x
+            
         b, c, h, w = x.shape
         
         x = self.norm(x)

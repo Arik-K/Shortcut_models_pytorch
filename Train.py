@@ -261,7 +261,7 @@ def main():
     optimizer = torch.optim.AdamW(
         model.parameters(), 
         lr=model_config.lr, 
-        weight_decay=model_config.wd, 
+        weight_decay=model_config.weight_decay, 
         betas=(model_config.beta1, model_config.beta2)
     )
 
